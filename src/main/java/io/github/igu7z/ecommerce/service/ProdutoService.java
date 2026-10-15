@@ -1,10 +1,12 @@
 package io.github.igu7z.ecommerce.service;
 
+import io.github.igu7z.ecommerce.entity.Cliente;
 import io.github.igu7z.ecommerce.entity.Produto;
 import io.github.igu7z.ecommerce.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -21,5 +23,39 @@ public class ProdutoService {
         }
 
         return produtoRepository.save(produto);
+    }
+
+    public List<Produto> listar() {
+        return produtoRepository.findAll();
+    }
+
+    public Produto buscarPorId(Long id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o ID: " + id));
+    }
+
+    public void deletarPorId(Long id) {
+        Produto produto = buscarPorId(id);
+        produtoRepository.delete(produto);
+    }
+
+    public Produto atualizarPorId (Long id, Produto produtoAtualizado) {
+        Produto produtoExistente = buscarPorId(id);
+
+        if (produtoAtualizado.getNome() != null) {
+            produtoExistente.setNome(produtoAtualizado.getNome());
+        }
+
+        if (produtoAtualizado.getDescricao() != null) {
+            produtoExistente.setDescricao(produtoAtualizado.getDescricao());
+        }
+
+            produtoExistente.setQuantidadeEstoque(produtoAtualizado.getQuantidadeEstoque());
+
+        if (produtoAtualizado.getPreco() != null) {
+            produtoExistente.setPreco(produtoAtualizado.getPreco());
+        }
+
+        return produtoRepository.save(produtoExistente);
     }
 }
