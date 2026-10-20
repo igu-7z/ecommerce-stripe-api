@@ -1,7 +1,11 @@
 package io.github.igu7z.ecommerce.controller;
 
 import io.github.igu7z.ecommerce.entity.Cliente;
+import io.github.igu7z.ecommerce.entity.Produto;
 import io.github.igu7z.ecommerce.service.ClienteService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +21,9 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente salvar(@RequestBody Cliente cliente){
-        return clienteService.salvar(cliente);
+    public ResponseEntity<Cliente> salvar(@Valid @RequestBody Cliente cliente) {
+        Cliente clienteSalvo = clienteService.salvar(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
     }
 
     @GetMapping
