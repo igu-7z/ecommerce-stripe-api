@@ -1,6 +1,7 @@
 package io.github.igu7z.ecommerce.service;
 
 import io.github.igu7z.ecommerce.entity.Cliente;
+import io.github.igu7z.ecommerce.exception.RecursoNaoEncontradoException;
 import io.github.igu7z.ecommerce.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class ClienteService {
 
     public Cliente buscarPorId(Long id) {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Cliente não encontrado com o ID: " + id));
     }
 
     public void deletarPorId(Long id) {
