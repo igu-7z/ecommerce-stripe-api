@@ -1,7 +1,9 @@
 package io.github.igu7z.ecommerce.controller;
 
+import io.github.igu7z.ecommerce.dto.request.ClienteRequestDTO;
+import io.github.igu7z.ecommerce.dto.request.ClienteUpdateDTO;
+import io.github.igu7z.ecommerce.dto.response.ClienteResponseDTO;
 import io.github.igu7z.ecommerce.entity.Cliente;
-import io.github.igu7z.ecommerce.entity.Produto;
 import io.github.igu7z.ecommerce.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,28 +23,32 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> salvar(@Valid @RequestBody Cliente cliente) {
-        Cliente clienteSalvo = clienteService.salvar(cliente);
+    public ResponseEntity<ClienteResponseDTO> salvar(@Valid @RequestBody ClienteRequestDTO dto) {
+        ClienteResponseDTO clienteSalvo = clienteService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
     }
 
     @GetMapping
-    public List<Cliente> listar() {
+    public List<ClienteResponseDTO> listar() {
         return clienteService.listar();
     }
 
     @GetMapping("/{id}")
-    public Cliente buscarPorId(@PathVariable Long id) {
+    public ClienteResponseDTO buscarPorId(@PathVariable Long id) {
         return clienteService.buscarPorId(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deletarPorId(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
         clienteService.deletarPorId(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public Cliente atualizarPorId(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
-        return clienteService.atualizarPorId(id, clienteAtualizado);
+    public ResponseEntity<ClienteResponseDTO> atualizarPorId(
+            @PathVariable Long id,
+            @Valid @RequestBody ClienteUpdateDTO dto) {
+        ClienteResponseDTO clienteAtualizado = clienteService.atualizarPorId(id, dto);
+        return ResponseEntity.ok(clienteAtualizado);
     }
 }

@@ -1,9 +1,10 @@
 package io.github.igu7z.ecommerce.controller;
 
-import io.github.igu7z.ecommerce.entity.Produto;
+import io.github.igu7z.ecommerce.dto.request.ProdutoRequestDTO;
+import io.github.igu7z.ecommerce.dto.request.ProdutoUpdateDTO;
+import io.github.igu7z.ecommerce.dto.response.ProdutoResponseDTO;
 import io.github.igu7z.ecommerce.service.ProdutoService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,28 +22,32 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> salvar(@Valid @RequestBody Produto produto) {
-        Produto produtoSalvo = produtoService.salvar(produto);
+    public ResponseEntity<ProdutoResponseDTO> salvar(@Valid @RequestBody ProdutoRequestDTO dto) {
+        ProdutoResponseDTO produtoSalvo = produtoService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
     }
 
     @GetMapping
-    public List<Produto> listar() {
+    public List<ProdutoResponseDTO> listar() {
         return produtoService.listar();
     }
 
     @GetMapping("/{id}")
-    public Produto buscarPorId(@PathVariable Long id) {
+    public ProdutoResponseDTO buscarPorId(@PathVariable Long id) {
         return produtoService.buscarPorId(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deletarPorId(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
         produtoService.deletarPorId(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public Produto atualizarPorId (@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
-        return produtoService.atualizarPorId(id, produtoAtualizado);
+    public ResponseEntity<ProdutoResponseDTO> atualizarPorId(
+            @PathVariable Long id,
+            @Valid @RequestBody ProdutoUpdateDTO dto) {
+        ProdutoResponseDTO produtoAtualizado = produtoService.atualizarPorId(id, dto);
+        return ResponseEntity.ok(produtoAtualizado);
     }
 }

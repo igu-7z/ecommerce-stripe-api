@@ -30,4 +30,6 @@ public class Produto {
     @Positive(message = "O preço deve ser maior que zero")
     @Column
     private BigDecimal preco;
+
+
 }
