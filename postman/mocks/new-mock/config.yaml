@@ -1,0 +1,15 @@
+id: 01a1ae4f-9b07-764a-ab8a-abd05fddb81a
+version: 1
+name: New Mock
+slug: new-mock-59510
+enableSession: true
+protocol: http
+port: 4500
+autoRestartOnChange: true
+logging:
+  level: verbose
+  showBody: true
+scenarios:
+  - name: default
+    path: ./default.js
+    default: true
