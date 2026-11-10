@@ -20,7 +20,7 @@ public class TokenService {
 
     public String gerarToken(Cliente cliente) {
         Date agora = new Date();
-        Date expiracao = new Date(agora.getTime() + 1000 * 60 * 60 * 2);
+        Date expiracao = new Date(agora.getTime() + (1000L * 60 * 60 * 2));
 
         return Jwts.builder()
                 .subject(cliente.getEmail())
@@ -28,6 +28,20 @@ public class TokenService {
                 .expiration(expiracao)
                 .signWith(getChave())
                 .compact();
+    }
 
+    public String validarToken(String token) {
+        try {
+            SecretKey chave = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+
+            return Jwts.parser()
+                    .verifyWith(chave)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getSubject();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
