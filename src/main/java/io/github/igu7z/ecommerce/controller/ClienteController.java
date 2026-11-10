@@ -24,7 +24,7 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteResponseDTO> salvar(@Valid @RequestBody ClienteRequestDTO dto) {
-        ClienteResponseDTO clienteSalvo = clienteService.salvar(dto);
+        ClienteResponseDTO clienteSalvo = clienteService.salvar (dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
     }
 
