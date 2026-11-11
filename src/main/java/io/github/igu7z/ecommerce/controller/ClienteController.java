@@ -8,6 +8,7 @@ import io.github.igu7z.ecommerce.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,5 +51,11 @@ public class ClienteController {
             @Valid @RequestBody ClienteUpdateDTO dto) {
         ClienteResponseDTO clienteAtualizado = clienteService.atualizarPorId(id, dto);
         return ResponseEntity.ok(clienteAtualizado);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ClienteResponseDTO> obterPerfil(@AuthenticationPrincipal Cliente clienteLogado) {
+        ClienteResponseDTO dto = new ClienteResponseDTO(clienteLogado);
+        return ResponseEntity.ok(dto);
     }
 }

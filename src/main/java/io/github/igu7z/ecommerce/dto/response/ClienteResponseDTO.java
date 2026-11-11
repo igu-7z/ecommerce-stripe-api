@@ -12,18 +12,15 @@ public class ClienteResponseDTO {
 
     private String email;
 
-    // 1. Construtor vazio obrigatório
     public ClienteResponseDTO() {
     }
 
-    // 2. Construtor facilitador: recebe a entidade Cliente e copia os dados para o DTO
     public ClienteResponseDTO(Cliente cliente) {
         this.id = cliente.getId();
         this.nome = cliente.getNome();
         this.email = cliente.getEmail();
     }
 
-    // 3. Getters para que o Spring consiga ler os dados e transformá-los em JSON
     public Long getId() {
         return id;
     }
