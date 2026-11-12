@@ -31,10 +31,8 @@ public class ClienteService {
         cliente.setEmail(dto.getEmail());
         cliente.setSenha(dto.getSenha());
 
-        // Salvamos no banco e guardamos o resultado em uma variável
         Cliente clienteSalvo = clienteRepository.save(cliente);
 
-        // Convertemos a entidade salva para o ResponseDTO antes de retornar
         return new ClienteResponseDTO(clienteSalvo);
     }
 
