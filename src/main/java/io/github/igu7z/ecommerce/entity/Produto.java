@@ -31,5 +31,8 @@ public class Produto {
     @Column
     private BigDecimal preco;
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id") // Cria a chave estrangeira no banco
+    private Categoria categoria;
 
 }

@@ -22,6 +22,8 @@ public class ProdutoRequestDTO {
     @PositiveOrZero(message = "A quantidade em estoque deve ser zero ou maior")
     private Integer quantidadeEstoque;
 
+    private Long categoriaId;
+
     public ProdutoRequestDTO() {
     }
 
@@ -55,5 +57,13 @@ public class ProdutoRequestDTO {
 
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
+    }
+
+    public Long getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
     }
 }

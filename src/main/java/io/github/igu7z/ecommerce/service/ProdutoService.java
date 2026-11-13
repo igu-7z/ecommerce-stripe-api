@@ -1,10 +1,14 @@
 package io.github.igu7z.ecommerce.service;
 
+
+
 import io.github.igu7z.ecommerce.dto.request.ProdutoRequestDTO;
 import io.github.igu7z.ecommerce.dto.request.ProdutoUpdateDTO;
 import io.github.igu7z.ecommerce.dto.response.ProdutoResponseDTO;
+import io.github.igu7z.ecommerce.entity.Categoria;
 import io.github.igu7z.ecommerce.entity.Produto;
 import io.github.igu7z.ecommerce.exception.RecursoNaoEncontradoException;
+import io.github.igu7z.ecommerce.repository.CategoriaRepository;
 import io.github.igu7z.ecommerce.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +18,12 @@ import java.util.List;
 public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository,
+                          CategoriaRepository categoriaRepository) {
         this.produtoRepository = produtoRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
     private Produto buscarEntidadePorId(Long id) {
@@ -25,11 +32,16 @@ public class ProdutoService {
     }
 
     public ProdutoResponseDTO salvar(ProdutoRequestDTO dto) {
+
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Categoria não encontrada!"));
+
         Produto produto = new Produto();
         produto.setNome(dto.getNome());
         produto.setDescricao(dto.getDescricao());
         produto.setPreco(dto.getPreco());
         produto.setQuantidadeEstoque(dto.getQuantidadeEstoque());
+        produto.setCategoria(categoria);
 
         Produto produtoSalvo = produtoRepository.save(produto);
 
