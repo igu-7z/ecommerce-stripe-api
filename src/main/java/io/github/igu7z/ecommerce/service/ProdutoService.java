@@ -45,7 +45,9 @@ public class ProdutoService {
 
         Produto produtoSalvo = produtoRepository.save(produto);
 
-        return new ProdutoResponseDTO(produtoSalvo);
+        ProdutoResponseDTO respostaDto = new ProdutoResponseDTO(produtoSalvo);
+
+        return respostaDto;
     }
 
     public List<ProdutoResponseDTO> listar() {

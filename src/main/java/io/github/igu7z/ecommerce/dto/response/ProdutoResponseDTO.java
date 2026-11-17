@@ -11,6 +11,8 @@ public class ProdutoResponseDTO {
     private String descricao;
     private Integer quantidadeEstoque;
     private BigDecimal preco;
+    private String nomeCategoria;
+    private Long categoriaId;
 
     public ProdutoResponseDTO() {
     }
@@ -21,6 +23,12 @@ public class ProdutoResponseDTO {
         this.descricao = produto.getDescricao();
         this.quantidadeEstoque = produto.getQuantidadeEstoque();
         this.preco = produto.getPreco();
+        this.nomeCategoria = produto.getCategoria().getNome();
+
+        if (produto.getCategoria() != null) {
+            this.nomeCategoria = produto.getCategoria().getNome();
+            this.categoriaId = produto.getCategoria().getId();
+        }
     }
 
     public Long getId() {
@@ -41,5 +49,13 @@ public class ProdutoResponseDTO {
 
     public BigDecimal getPreco() {
         return preco;
+    }
+
+    public String getNomeCategoria() {
+        return nomeCategoria;
+    }
+
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 }
