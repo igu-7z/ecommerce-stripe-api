@@ -17,6 +17,8 @@ public class ProdutoUpdateDTO {
     @Positive(message = "O preço deve ser maior que zero")
     private BigDecimal preco;
 
+    private Long categoriaId;
+
     public ProdutoUpdateDTO(){
     }
 
@@ -34,5 +36,9 @@ public class ProdutoUpdateDTO {
 
     public BigDecimal getPreco() {
         return preco;
+    }
+
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 }

@@ -23,7 +23,6 @@ public class ProdutoResponseDTO {
         this.descricao = produto.getDescricao();
         this.quantidadeEstoque = produto.getQuantidadeEstoque();
         this.preco = produto.getPreco();
-        this.nomeCategoria = produto.getCategoria().getNome();
 
         if (produto.getCategoria() != null) {
             this.nomeCategoria = produto.getCategoria().getNome();

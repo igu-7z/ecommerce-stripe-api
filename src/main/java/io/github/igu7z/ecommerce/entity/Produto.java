@@ -32,7 +32,7 @@ public class Produto {
     private BigDecimal preco;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id") // Cria a chave estrangeira no banco
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
 }

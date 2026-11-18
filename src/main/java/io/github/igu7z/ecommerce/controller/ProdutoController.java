@@ -28,13 +28,16 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public List<ProdutoResponseDTO> listar() {
-        return produtoService.listar();
+    public ResponseEntity<List<ProdutoResponseDTO>> listarTodos() {
+        List<ProdutoResponseDTO> produtos = produtoService.listarTodos();
+        return ResponseEntity.ok(produtos);
     }
 
     @GetMapping("/{id}")
-    public ProdutoResponseDTO buscarPorId(@PathVariable Long id) {
-        return produtoService.buscarPorId(id);
+    public ResponseEntity<ProdutoResponseDTO> buscarPorId(@PathVariable Long id) {
+        ProdutoResponseDTO produtoDto = produtoService.buscarPorId(id);
+
+        return ResponseEntity.ok(produtoDto);
     }
 
     @DeleteMapping("/{id}")
