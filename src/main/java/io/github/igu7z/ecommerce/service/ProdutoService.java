@@ -61,22 +61,21 @@ public class ProdutoService {
 
     @Transactional(readOnly = true)
     public ProdutoResponseDTO buscarPorId(Long id) {
-        Produto produto = buscarEntidadePorId(id); // Reutilizando nosso método auxiliar limpo!
+        Produto produto = buscarEntidadePorId(id);
         return new ProdutoResponseDTO(produto);
     }
 
     @Transactional
     public void deletarPorId(Long id) {
-        Produto produto = buscarEntidadePorId(id);
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Produto não encontrado!"));
         produtoRepository.delete(produto);
     }
 
     @Transactional
     public ProdutoResponseDTO atualizarPorId(Long id, ProdutoUpdateDTO dto) {
-        // 1. Buscamos o produto existente no banco (lança 404 se não achar)
         Produto produtoExistente = buscarEntidadePorId(id);
 
-        // 2. Atualizamos os campos básicos caso venham preenchidos no DTO
         if (dto.getNome() != null) {
             produtoExistente.setNome(dto.getNome());
         }
@@ -100,7 +99,6 @@ public class ProdutoService {
             produtoExistente.setCategoria(novaCategoria);
         }
 
-        // 4. Salvamos as alterações (tanto dos dados quanto da categoria, se foi alterada)
         Produto produtoAtualizado = produtoRepository.save(produtoExistente);
         return new ProdutoResponseDTO(produtoAtualizado);
     }
